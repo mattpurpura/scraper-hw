@@ -1,65 +1,54 @@
 var express = require("express");
 var mongojs = require("mongojs");
+var logger = require("morgan");
 var axios = require("axios");
 var cheerio = require("cheerio");
+var mongoose = require("mongoose");
 
 var app = express();
 
+app.use(logger("dev"));
+
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(express.static("public"));
 
-var databaseUrl = "zoo_db";
-var collections = ["animals"];
+var db = require("./models")
 
-var db = mongojs(databaseUrl, collections);
-db.on("error", function(error){
-    console.log("Database Error: ", error);
-});
-
-app.get("/", function(req, res){
-    res.send("Hello World");
-});
-
-app.get("/all", function(req, res){
-    db.animals.find({}, function(err, found){
-        if(err) throw err;
-        res.json(found);
-    })
-})
+mongoose.connect("mongodb://localhost/scraperHW", { useNewUrlParser: true });
 
 app.get("/api/patriots", function(req, res){
     axios.get("https://www.patriots.com").then(function(response){
         var $ = cheerio.load(response.data);
 
-        var results = [];
-
         $("div.nfl-o-headlinestack__itemcontent").each(function(i, element){
-            var title = "https:/www.patriots.com"+$(element).children().attr("href");
+            var link = "https:/www.patriots.com"+$(element).children().attr("href");
+            var title = $(element).children().text();
+            var result = {};
+            result.title = title;
+            result.link = link;
 
-            results.push(title);
+            console.log(result);
+
+            db.Article.create(result)
+            .then(function(dbArticle){
+                console.log(dbArticle);
+            })
+            .catch(function(err){
+                console.log(err);
+            });
         })
-        console.log(results);
-        res.json(results);
+        res.redirect("SCRAPED");
     });
 });
 
-app.get("/api/team/:team-name", function(req, res){
-    team = req.body.team-name; 
-    console.log(team);
-    axios.get("https://www."+team+".com").then(function(response){
-        var $ = cheerio.load(response.data);
-
-        var results = [];
-
-        $("div.nfl-o-headlinestack__itemcontent").each(function(i, element){
-            var title = "https:/www.patriots.com"+$(element).children().attr("href");
-
-            results.push(title);
-        })
-        console.log(results);
-        res.json(results);
-    });
-});
-
+app.get("/articles", function(req, res){
+    db.Article.find({})
+    .then(function(dbArticle){
+        res.json(dbArticle);
+    })
+})
 
 app.listen(8080, function() {
     console.log("App is running on 8080");
