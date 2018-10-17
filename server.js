@@ -16,6 +16,7 @@ app.use(express.json());
 
 app.use(express.static("public"));
 
+var db = require("./models")
 
 var databaseUri = 'mongodb://localhost/scraperHW';
 
@@ -26,7 +27,6 @@ else{
     mongoose.connect(databaseUri);
 }
 
-var db = mongoose.connection;
 
 mongoose.connect("mongodb://localhost/scraperHW", { useNewUrlParser: true });
 
