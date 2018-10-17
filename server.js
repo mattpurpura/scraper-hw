@@ -35,7 +35,7 @@ app.get("/api/patriots", function(req, res){
         var $ = cheerio.load(response.data);
 
         $("div.nfl-o-headlinestack__itemcontent").each(function(i, element){
-            var link = "https:/www.patriots.com"+$(element).children().attr("href");
+            var link = "https://www.patriots.com"+$(element).children().attr("href");
             var title = $(element).children().text();
             var result = {};
             result.title = title;
