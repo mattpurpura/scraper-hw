@@ -5,17 +5,27 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script src="app.js"></script>
     <title>Sports Hub</title>
 </head>
 <body>
+
+    <!-- Image and text -->
+<nav class="navbar navbar-light bg-light" style="background-color: navy; padding-bottom: 5px">
+        <a class="navbar-brand" href="#">
+          <img src="./images/pats_logo.png" width="60" height="30" class="d-inline-block align-top" alt="">
+        </a>
+      </nav>
+
+      <!-- container for headlines and notes -->
     <div class = "container">
         <div class = "row" >
-            <div class = "col-lg-6" id="pats-headlines">
-                <h1>Patriots Headlines</h1>
+            <div class = "col-lg-5" id="pats-headlines">
+                <h3 id='headlines-title'>LATEST HEADLINES</h3>
             </div>
-            <div class = "col-lg-6" id='note-column'>
+            <div class = "col-lg-7" id='note-column'>
                 <h2 id="note-article" style="display: none"></h2>
                 <form id='note-form' style="display: none">
                     <div class="form-group">

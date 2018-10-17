@@ -1,0 +1,36 @@
+body{
+    background-color: rgb(226, 224, 224)
+}
+
+.headline {
+    border-color: maroon;
+    border-style: solid;
+    border-width: 0px 0px 1px 0px;
+    /* border-radius: 5px; */
+    /* margin-bottom: 3px; */
+    color: grey;
+    margin: 5px;
+    padding-left: 10px;
+}
+
+.top {
+    border-width: 1px 0px 1px 0px
+}
+
+a{
+    color: navy;
+}
+
+#pats-headlines{
+    background-color: white;
+    border-radius: 5px;
+    padding-bottom: 10px;
+}
+
+#note-column{
+    padding-left: 100px;
+}
+
+#headlines-title{
+    margin-left: 10px;
+}

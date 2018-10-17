@@ -2,20 +2,29 @@ $(document).ready(function(){
 
     function displayLinks(data){
         for (let i = 0; i < data.length; i++){
-            let row = $("<div>").addClass("row").attr("style", "margin-top: 5px");
-            let linkColumn = $("<div>").addClass("col-md-6");
+            let row = $("<div>").addClass("row headline");
+            if(i===0){
+                row.addClass("top");
+            }
             let link = $("<a>").attr("href", data[i].link).text(data[i].title);
-            let span = $("<span>").addClass("create-note").attr("data-id", data[i]._id).text("| Create Note");
+            let noteButton = $("<span>").addClass("note-button").attr("data-id", data[i]._id);
             
-            linkColumn.append(link, span);
-            row.append(linkColumn);
+            row.append(link);
             
+            if(data[i].note){
+                noteButton.text("| View Notes").addClass("has-notes");
+            }
+            else{
+                noteButton.text("| Create Note");
+            }
+
+            row.append(noteButton);
             $("#pats-headlines").append(row);
         }
     };
 
 
-    $(document).on("click",".create-note", function(){
+    $(document).on("click",".note-button", function(){
         $("#noteTitle").val("")
         $("#noteBody").val("");
 
@@ -27,7 +36,7 @@ $(document).ready(function(){
                 console.log(data[0].note.title);
                 $("#noteTitle").val(data[0].note.title)
                 $("#noteBody").val(data[0].note.body);
-                $("#delete-note").attr("data-id", data[0].note._id);
+                $("#delete-note").attr("data-note-id", data[0].note._id).attr("data-article-id", data[0]._id);
                 $("#delete-note").removeAttr("style");
             }
             
@@ -44,6 +53,14 @@ $(document).ready(function(){
         $("#note-article").attr("style", "display: none");
         
         let thisId = $(this).attr("data-id");
+
+        if($(`.note-button[data-id=${thisId}]`).hasClass("has-notes")){
+            
+        }
+        else{
+            $(`.note-button[data-id=${thisId}]`).text(" | View Notes").addClass("has-notes")
+        }
+
         console.log(thisId);
         $.ajax({
             method: "POST", 
@@ -52,8 +69,7 @@ $(document).ready(function(){
                 title: $("#noteTitle").val(),
                 body: $("#noteBody").val()
             }
-        }).then(function(data){
-            console.log(data);
+        }).then(function(){
             $("#noteBody").val("");
             $("#noteTitle").val("");
             $("#note-form").attr("style", "display: none");
@@ -64,11 +80,15 @@ $(document).ready(function(){
     $("#delete-note").on("click", function(event){
         event.preventDefault();
         
-        let thisId = $(this).attr("data-id");
+        let thisNoteId = $(this).attr("data-note-id");
+        let thisArticleId = $(this).attr("data-article-id");
+
+
+        $(`.note-button[data-id= ${thisArticleId}]`).removeClass("has-notes").text(" | Create Note")
         
         $.ajax({
             method: "DELETE", 
-            url: `/delete/${thisId}`
+            url: `/delete/${thisNoteId}`
         })
 
         $("#noteBody").val("");
