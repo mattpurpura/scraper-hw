@@ -39,12 +39,13 @@ app.get("/api/patriots", function(req, res){
                 console.log(err);
             });
         })
-        res.redirect("SCRAPED");
+        res.redirect("/");
     });
 });
 
 app.get("/articles", function(req, res){
     db.Article.find({})
+    .populate('note')
     .then(function(dbArticle){
         res.json(dbArticle);
     })

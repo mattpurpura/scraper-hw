@@ -1,6 +1,7 @@
 $(document).ready(function(){
 
     function displayLinks(data){
+        console.log(data);
         for (let i = 0; i < data.length; i++){
             let row = $("<div>").addClass("row headline");
             if(i===0){
@@ -95,12 +96,22 @@ $(document).ready(function(){
         $("#noteTitle").val("");
     })
 
+
+    $("#sync").on("click", function(event){
+        $.getJSON("/api/patriots", function(data){
+
+        })
+        .then(function(){
+            $.getJSON("/articles", function(data) {
+                // Call our function to generate a table body
+                displayLinks(data);
+              });
+        })
+    })
+
     $.getJSON("/articles", function(data) {
         // Call our function to generate a table body
         displayLinks(data);
       });
-
-
-
 
 }); // eds document ready
