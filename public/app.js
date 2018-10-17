@@ -8,7 +8,7 @@ $(document).ready(function(){
                 row.addClass("top");
             }
             let link = $("<a>").attr("href", data[i].link).text(data[i].title);
-            let noteButton = $("<span>").addClass("note-button").attr("data-id", data[i]._id);
+            let noteButton = $("<span>").addClass("note-button").attr("data-id", data[i]._id).attr("data-toggle", "modal").attr("data-target","#exampleModal");
             
             row.append(link);
             
@@ -94,6 +94,7 @@ $(document).ready(function(){
 
         $("#noteBody").val("");
         $("#noteTitle").val("");
+        $("#delete-note").attr("style", "display: none");
     })
 
 

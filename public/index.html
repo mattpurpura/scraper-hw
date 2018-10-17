@@ -4,9 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="style.css">
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.js"></script> -->
     <script src="app.js"></script>
     <title>Sports Hub</title>
 </head>
@@ -20,15 +22,26 @@
       </nav>
 
       <!-- container for headlines and notes -->
-    <div class = "container">
-        <div class = "row" >
-            <div class = "col-lg-5" id="pats-headlines">
+    <div class = "container" style="width: 40%">
+        <div class = "row" id="pats-headlines">
                 <h3 id='headlines-title' style="display: inline-flex">LATEST HEADLINES</h3>
                 <button class='btn btn-primary' style="display: inline-flex" id="sync">Sync</button>
+        </div> 
+    </div>
+    
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="note-article"></h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
             </div>
-            <div class = "col-lg-7" id='note-column'>
-                <h2 id="note-article" style="display: none"></h2>
-                <form id='note-form' style="display: none">
+            <div class="modal-body">
+                <h2 id="" style="display: block"></h2>
+                <form id='note-form' style="display: block">
                     <div class="form-group">
                         <label for="noteTitle">Title</label>
                         <input type="text" class="form-control" id="noteTitle" placeholder="Note Title">
@@ -37,10 +50,18 @@
                         <label for="noteBody">Body</label>
                         <textarea class="form-control" id="noteBody" rows="3"></textarea>
                     </div>
-                    <button type="submit" id='save-note' class="btn btn-primary">Save Note</button>
-                    <button id="delete-note" class="btn btn-primary" style="display: none">Delete Note</button>
+                    <!-- <button type="submit" id='save-note' class="btn btn-primary">Save Note</button>
+                    <button id="delete-note" class="btn btn-primary" style="display: none">Delete Note</button> -->
                 </form>
             </div>
-        </div>   
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" id='save-note' class="btn btn-primary" data-dismiss="modal">Save changes</button>
+            <button id="delete-note" class="btn btn-primary" data-dismiss="modal" style="display: none">Delete Note</button>
+            </div>
+        </div>
+        </div>
     </div>
+
+
 </body>

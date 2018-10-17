@@ -7,6 +7,8 @@ var mongoose = require("mongoose");
 
 var app = express();
 
+var PORT = process.env.PORT || 8080
+
 app.use(logger("dev"));
 
 app.use(express.urlencoded({ extended: true }));
@@ -15,6 +17,16 @@ app.use(express.json());
 app.use(express.static("public"));
 
 var db = require("./models")
+
+var databaseUri = 'mongodb://localhost/scraperHW';
+
+if(process.env.MONGODB_URI){
+    mongoose.connect(process.env.MONGODB_URI);
+}
+else{
+    mongoose.connect(databaseUri);
+}
+
 
 mongoose.connect("mongodb://localhost/scraperHW", { useNewUrlParser: true });
 
@@ -88,6 +100,6 @@ app.delete("/delete/:id", function(req, res){
 })
 
 
-app.listen(8080, function() {
+app.listen(PORT, function() {
     console.log("App is running on 8080");
 });
